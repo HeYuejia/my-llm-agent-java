@@ -24,13 +24,6 @@ src/main/java/com/rag/
 2. **工具调用** - 通过MCP协议与外部工具交互
 3. **LLM集成** - 集成OpenAI的大型语言模型
 
-## 技术栈
-
-- Java 17+
-- Maven
-- OpenAI API
-- Model Context Protocol (MCP)
-
 ## 依赖项
 
 - com.theokanning.openai-gpt3-java:service - OpenAI API 客户端
@@ -38,13 +31,7 @@ src/main/java/com/rag/
 - io.github.cdimascio:dotenv-java - 环境变量处理
 - okhttp3 - HTTP 客户端
 - slf4j 和 logback - 日志记录
-
-## 环境设置
-
-1. 克隆仓库
-2. 配置环境变量
-   - 复制 `src/main/resources/.env.example` 到 `src/main/resources/.env`
-   - 填写您的 API 密钥和其他配置
+  
 
 ## 编译与运行
 
@@ -59,17 +46,7 @@ mvn package
 java -jar target/llm-mcp-rag-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
 
-## 与原 TypeScript 版本的区别
-
-- 使用 Java 面向对象编程范式
-- 使用 Maven 进行依赖管理（替代npm/yarn）
-- 使用 com.theokanning.openai-gpt3-java 库代替原生JavaScript OpenAI SDK
-- 使用 Java 自己的进程管理替代Node.js的进程管理
-
-## 许可证
-
-与原项目相同
-
-## 贡献
-
-欢迎提交问题和拉取请求。
+## 进展
+```
+4月14日15:05 在实现基本功能的基础上做了以下优化：1.上下文摘要 2.嵌入向量缓存 3.LLM响应缓存 4.上下文分块处理
+```
