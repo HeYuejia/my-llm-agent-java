@@ -1,6 +1,7 @@
 package com.rag.client;
 
 import com.google.gson.Gson;
+import com.rag.model.EmbeddingRetriever;
 import com.rag.utils.LogUtils;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class Agent {
     private final String systemPrompt;
     private final String context;
     private final Gson gson = new Gson();
+    private final ContextManager contextManager;
     private final SemanticChunker semanticChunker = new SemanticChunker();
     boolean isSimplyChunk = true;
 
@@ -29,11 +31,13 @@ public class Agent {
      * @param systemPrompt 系统提示
      * @param context      初始上下文
      */
-    public Agent(String model, List<MCPClient> mcpClients, String systemPrompt, String context) {
+    public Agent(String model, List<MCPClient> mcpClients, String systemPrompt, String context, EmbeddingRetriever embedder) throws IOException {
         this.mcpClients = mcpClients;
         this.model = model;
         this.systemPrompt = systemPrompt;
         this.context = context;
+        String initialContext = "";
+        this.contextManager = new ContextManager(20, embedder, initialContext);
     }
 
     /**
@@ -80,6 +84,8 @@ public class Agent {
         if (llm == null) {
             throw new IllegalStateException("Agent not initialized");
         }
+        // 将用户输入作为新上下文
+        contextManager.addContext("[User] " + prompt);
 
         ChatOpenAI.ChatResponse response;
 
@@ -112,6 +118,8 @@ public class Agent {
                         Object result = mcp.callTool(toolCall.getFunction().getName(), arguments);
                         
                         System.out.println("Result: " + gson.toJson(result));
+
+                        contextManager.updateWithToolResult(toolCall.getFunction().getName(), result.toString());
                         
                         // 将结果添加到对话历史
                         llm.appendToolResult(toolCall.getId(), gson.toJson(result));
@@ -189,6 +197,11 @@ public class Agent {
         }
 
         return chunks;
+    }
+
+    // 获取当前优化后的上下文
+    private String getOptimizedContext() {
+        return String.join("\n", contextManager.getCurrentContext());
     }
 
 

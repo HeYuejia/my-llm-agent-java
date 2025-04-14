@@ -1,6 +1,7 @@
 package com.rag;
 
 import com.rag.client.Agent;
+import com.rag.client.ContextManager;
 import com.rag.client.MCPClient;
 import com.rag.model.EmbeddingRetriever;
 import com.rag.utils.LogUtils;
@@ -75,7 +76,7 @@ public class Main {
             List<MCPClient> mcpClients = Arrays.asList(fetchMCP, fileMCP);
             
             // 创建代理
-            Agent agent = new Agent("openai/gpt-4o-mini", mcpClients, "", context);
+            Agent agent = new Agent("openai/gpt-4o-mini", mcpClients, "", context , new EmbeddingRetriever("BAAI/bge-m3"));
             
             // 初始化代理
             agent.init();
