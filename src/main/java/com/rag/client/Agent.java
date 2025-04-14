@@ -156,9 +156,11 @@ public class Agent {
         List<String> chunks = new ArrayList<>();
         int length = context.length();
 
+        //简单按字符/字数分块
         for (int i = 0; i < length; i += chunkSize) {
             chunks.add(context.substring(i, Math.min(length, i + chunkSize)));
         }
+        //按语意分块
 
         return chunks;
     }
