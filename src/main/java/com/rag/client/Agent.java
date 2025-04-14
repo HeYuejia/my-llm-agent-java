@@ -19,6 +19,7 @@ public class Agent {
     private final String context;
     private final Gson gson = new Gson();
     private final SemanticChunker semanticChunker = new SemanticChunker();
+    boolean isSimplyChunk = true;
 
     /**
      * 构造函数
@@ -130,6 +131,19 @@ public class Agent {
         }
     }
 
+    public String invokeWithChunks(String prompt) throws IOException {
+        List<String> chunks = chunkContext(this.context, 4000);
+        StringBuilder combinedResponse = new StringBuilder();
+
+        for (String chunk : chunks) {
+            ChatOpenAI.ChatResponse response = llm.chatWithContext(prompt, chunk);
+            combinedResponse.append(response.getContent()).append("\n\n");
+        }
+
+        // 合并分块响应
+        return llm.chat("合并以下响应:\n" + combinedResponse.toString()).getContent();
+    }
+
     /**
      * 查找可以处理指定工具的MCP客户端
      *
@@ -152,7 +166,7 @@ public class Agent {
         return response.getContent();
     }
 
-    boolean isSimplyChunk = true;
+
     // 在Agent中添加分块处理方法
     private List<String> chunkContext(String context, int chunkSize) {
         List<String> chunks = new ArrayList<>();
@@ -177,16 +191,5 @@ public class Agent {
         return chunks;
     }
 
-    public String invokeWithChunks(String prompt) throws IOException {
-        List<String> chunks = chunkContext(this.context, 4000);
-        StringBuilder combinedResponse = new StringBuilder();
 
-        for (String chunk : chunks) {
-            ChatOpenAI.ChatResponse response = llm.chatWithContext(prompt, chunk);
-            combinedResponse.append(response.getContent()).append("\n\n");
-        }
-
-        // 合并分块响应
-        return llm.chat("合并以下响应:\n" + combinedResponse.toString()).getContent();
-    }
 } 
