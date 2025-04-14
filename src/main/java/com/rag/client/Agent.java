@@ -157,7 +157,12 @@ public class Agent {
         int length = context.length();
 
         //简单按字符/字数分块
-        for (int i = 0; i < length; i += chunkSize) {
+//        for (int i = 0; i < length; i += chunkSize) {
+//            chunks.add(context.substring(i, Math.min(length, i + chunkSize)));
+//        }
+        //重叠窗口设计：相邻分块保留部分重叠内容（防止关键信息被切断）
+        int overlapSize = 200; // 重叠字符数
+        for (int i = 0; i < length; i += chunkSize - overlapSize) {
             chunks.add(context.substring(i, Math.min(length, i + chunkSize)));
         }
         //按语意分块
