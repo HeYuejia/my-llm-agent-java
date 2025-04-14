@@ -49,4 +49,8 @@ java -jar target/llm-mcp-rag-1.0-SNAPSHOT-jar-with-dependencies.jar
 ## 进展
 ```
 4月14日15:05 在实现基本功能的基础上做了以下优化：1.上下文摘要 2.嵌入向量缓存 3.LLM响应缓存 4.上下文分块处理
+
+15:33 另外实现了基于语义的较为智能的分块。还可以考虑引入NLP进行分词
+
+
 ```
