@@ -3,7 +3,6 @@ package com.rag.client;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.rag.utils.LogUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -131,13 +130,15 @@ public class MCPClient {
      */
     private void connectToServer() throws IOException {
         try {
+            //用于创建进程的变量
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             if (args != null && args.length > 0) {
                 for (String arg : args) {
                     processBuilder.command().add(arg);
                 }
             }
-            
+
+            //启动这个与服务器进行连接的进程并建立其连接通道用于读写
             process = processBuilder.start();
             writer = new PrintWriter(new OutputStreamWriter(process.getOutputStream()), true);
             reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
