@@ -1,6 +1,6 @@
 # LLM-MCP-RAG Java 版本
 
-这是原 TypeScript LLM-MCP-RAG 项目的 Java 实现版本。该项目结合了大型语言模型（LLM）和检索增强生成（RAG）技术，通过 Model Context Protocol (MCP) 与外部工具进行交互。
+该项目结合了大型语言模型（LLM）和检索增强生成（RAG）技术，通过 Model Context Protocol (MCP) 与外部工具进行交互。
 
 ## 项目结构
 
@@ -24,14 +24,6 @@ src/main/java/com/rag/
 2. **工具调用** - 通过MCP协议与外部工具交互
 3. **LLM集成** - 集成OpenAI的大型语言模型
 
-## 依赖项
-
-- com.theokanning.openai-gpt3-java:service - OpenAI API 客户端
-- com.google.code.gson - JSON 处理
-- io.github.cdimascio:dotenv-java - 环境变量处理
-- okhttp3 - HTTP 客户端
-- slf4j 和 logback - 日志记录
-  
 
 ## 编译与运行
 
