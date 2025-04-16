@@ -6,27 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 向量存储项，包含嵌入向量和对应的文档
- */
-class VectorStoreItem {
-    private double[] embedding;
-    private String document;
-
-    public VectorStoreItem(double[] embedding, String document) {
-        this.embedding = embedding;
-        this.document = document;
-    }
-
-    public double[] getEmbedding() {
-        return embedding;
-    }
-
-    public String getDocument() {
-        return document;
-    }
-}
-
-/**
  * 向量存储类，负责存储和检索向量嵌入
  */
 public class VectorStore {
@@ -109,4 +88,25 @@ public class VectorStore {
             return score;
         }
     }
-} 
+}
+
+/**
+ * 向量存储项，包含嵌入向量和对应的文档
+ */
+class VectorStoreItem {
+    private double[] embedding;
+    private String document;
+
+    public VectorStoreItem(double[] embedding, String document) {
+        this.embedding = embedding;
+        this.document = document;
+    }
+
+    public double[] getEmbedding() {
+        return embedding;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+}
